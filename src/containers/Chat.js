@@ -1,33 +1,37 @@
 import React, { Component } from "react"
 import io from "socket.io-client"
 import { connect } from "react-redux"
-import Message from "../components/Message"
 import moment from "moment"
+import Message from "../components/Message"
+import { newMessage } from "../actions"
 
 class Chat extends Component {
-  state = {
-    messages: []
+  socket = io.connect("http://localhost")
+
+  componentDidMount() {
+    const { dispatch } = this.props
+    this.scrollToBottom()
+
+    this.socket.on("message", data => {
+      dispatch(newMessage(data))
+    })
   }
 
-  socket = io.connect("http://localhost").on("message", data => {
-    this.changeState(data)
-  })
+  componentDidUpdate() {
+    this.scrollToBottom()
+  }
 
   handleButton = e => {
+    const { dispatch } = this.props
     let recieveData = {
-      user: this.props.user,
+      user: this.props.login,
       text: this.input.value,
       date: moment().format("MMMM Do YYYY, h:mm:ss a")
     }
     e.preventDefault()
-    this.socket.emit("message", recieveData, data => this.changeState(data))
+    this.socket.emit("message", recieveData, data => dispatch(newMessage(data)))
     this.input.value = ""
     this.scrollToBottom()
-  }
-  changeState = data => {
-    this.setState(state => {
-      return { messages: [...state.messages, data] }
-    })
   }
 
   scrollToBottom = () => {
@@ -36,13 +40,6 @@ class Chat extends Component {
     this.messageList.scrollTop = maxScrollTop > 0 ? maxScrollTop : 0
   }
 
-  componentDidMount() {
-    this.scrollToBottom()
-  }
-
-  componentDidUpdate() {
-    this.scrollToBottom()
-  }
   render() {
     return (
       <div className="content">
@@ -52,7 +49,7 @@ class Chat extends Component {
             this.messageList = el
           }}
         >
-          <Message messages={this.state.messages} />
+          <Message messages={this.props.messages} />
         </div>
         <div className="wrapperForm">
           <form className="messageForm">
@@ -74,7 +71,8 @@ class Chat extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    login: state.user.token.login,
+    messages: state.messages
   }
 }
 

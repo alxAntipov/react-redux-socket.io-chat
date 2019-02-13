@@ -1,18 +1,18 @@
 import { combineReducers } from "redux"
+import user from "./user"
+import { NEW_MESSAGE } from "../constants"
 
 const messages = (state = [], action) => {
-  return []
-}
-const user = (state = "", action) => {
   switch (action.type) {
-    case "SET_USER":
-      return action.username
+    case NEW_MESSAGE:
+      return [...state, action.message]
     default:
       return state
   }
 }
 
 const reducers = combineReducers({
+  messages,
   user
 })
 

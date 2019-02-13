@@ -1,21 +1,22 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
-import { setUser } from "../actions"
+import { userLogout } from "../actions/user"
 
 class SideBar extends Component {
-  saveUser = e => {
-    const { dispatch } = this.props
-    e.preventDefault()
-    dispatch(setUser(this.input.value))
-  }
   render() {
+    const { login, dispatch } = this.props
+
     return (
-      <form className="sideBar">
-        <input type="text" ref={node => (this.input = node)} />
-        <button onClick={this.saveUser}>Save</button>
-      </form>
+      <div className="sideBar">
+        <p>{login}</p>
+        <button onClick={e => dispatch(userLogout())}>Выйти</button>
+      </div>
     )
   }
 }
 
-export default connect()(SideBar)
+const mapStateToProps = state => ({
+  login: state.user.token.login
+})
+
+export default connect(mapStateToProps)(SideBar)

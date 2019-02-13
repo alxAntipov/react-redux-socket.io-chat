@@ -1,8 +1,8 @@
-import { RECEIVE_MESSAGE, SEND_MESSAGE } from "../constants"
+import { NEW_MESSAGE } from "../constants"
 
-export function setUser(username) {
+export function newMessage(message) {
   return {
-    type: "SET_USER",
-    username
+    type: NEW_MESSAGE,
+    message
   }
 }
