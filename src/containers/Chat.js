@@ -22,6 +22,8 @@ class Chat extends Component {
   }
 
   handleButton = e => {
+    console.log("hi")
+
     const { dispatch } = this.props
     let recieveData = {
       user: this.props.login,
@@ -42,7 +44,7 @@ class Chat extends Component {
 
   render() {
     return (
-      <div className="content">
+      <div className="chatWrapper">
         <div
           className="messages"
           ref={el => {

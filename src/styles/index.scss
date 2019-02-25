@@ -1,40 +1,10 @@
 @import "./thypography";
-@import "./auth.scss";
-@import "./chat.scss";
+@import "./variables";
 
+@import "./templates/auth";
+@import "./templates/main";
 
-* {
-  margin: 0;
-  padding: 0;
-  font-family: 'Catamaran', sans-serif;
-  font-size: 13px;
-}
-
-body { 
-  min-height:100vh; 
-  background: linear-gradient(45deg, #511863, #190946) no-repeat;
-}
-
-
-.App {
-  position: absolute;
-  margin: 0;
-  transform: translate(-50%, -50%);
-  top: 50%; 
-  left: 50%;
-}
-.chatWrapper {
-  display: flex;
-  width: 80vw;
-  height: 90vh;
-}
-.content {
-  width: 70%;
-  height: 100%;
-}
-
-.sideBar {
-  width: 30%;
-  height: 100%;
-  background-color: $darkBlue;
-}
+@import "./components/messageList";
+@import "./components/messageForm";
+@import "./components/sideBar";
+@import "./components/Profile";

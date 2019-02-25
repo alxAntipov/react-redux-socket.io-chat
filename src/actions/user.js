@@ -1,89 +1,43 @@
-import jwtDecode from "jwt-decode"
-import {
-  LOGIN_FAILURE,
-  LOGIN_SUCCESS,
-  LOGIN_REQUEST,
-  LOGOUT_SUCCESS,
-  REGISTER_REQUEST
-} from "../constants"
+import { USERS_FAILURE, USERS_REQUEST, USERS_SUCCESS } from "../constants"
 
-// Login action
-function requestLogin() {
+// get userList action
+function requestUserList() {
   return {
-    type: LOGIN_REQUEST
+    type: USERS_REQUEST
   }
 }
 
-function receiveLogin(token) {
+function receiveUserList(userList) {
   return {
-    type: LOGIN_SUCCESS,
-    token
+    type: USERS_SUCCESS,
+    userList
   }
 }
 
-function loginError(message) {
+function UserListError(message) {
   return {
-    type: LOGIN_FAILURE,
+    type: USERS_FAILURE,
     message
   }
 }
 
-export function postLogin(credentials) {
+export function getUserList() {
   return dispatch => {
-    dispatch(requestLogin())
-    return fetch(`http://localhost/login`, {
-      method: "post",
-      body: JSON.stringify(credentials),
-      headers: {
-        "Content-Type": "application/json"
-      }
+    dispatch(requestUserList())
+    return fetch(`http://localhost/userList`, {
+      method: "get"
     })
       .then(response => {
+        console.log(response)
+
         return response.json()
       })
       .then(response => {
         if (!response.error) {
-          const token = response.user.token
-          localStorage.setItem("token", token)
-          dispatch(receiveLogin(jwtDecode(token)))
+          dispatch(receiveUserList(response))
         } else {
-          dispatch(loginError(response.error))
+          dispatch(UserListError(response.error))
         }
       })
   }
-}
-
-// Registration action
-function requestRegister() {
-  return {
-    type: REGISTER_REQUEST
-  }
-}
-
-export function postRegister(credentials) {
-  return dispatch => {
-    dispatch(requestRegister())
-    return fetch(`http://localhost/register`, {
-      method: "post",
-      body: JSON.stringify(credentials),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(res => res.json())
-      .then(res => {
-        if (!res.error) {
-          const token = res.user.token
-          localStorage.setItem("token", token)
-          dispatch(receiveLogin(jwtDecode(token)))
-        } else {
-          dispatch(loginError(res.error))
-        }
-      })
-  }
-}
-
-export function userLogout() {
-  localStorage.removeItem("token")
-  return { type: LOGOUT_SUCCESS }
 }

@@ -34,7 +34,8 @@ const user = (state = initialState, action) => {
       })
     case LOGOUT_SUCCESS:
       return Object.assign({}, state, {
-        isAuthenticated: false
+        isAuthenticated: false,
+        token: []
       })
     case REGISTER_REQUEST:
       return Object.assign({}, state, {

@@ -72,4 +72,19 @@ router.post("/login", auth.optional, (req, res, next) => {
   )(req, res, next)
 })
 
+router.get("/userList", (req, res) => {
+  User.find().then(user => {
+    return res.json(user)
+  })
+})
+
+router.post("/new_channel", (req, res) => {
+  const {
+    body: { userId }
+  } = req
+  User.find({ _id: userId }).then(user => {
+    return res.json(user.contacts)
+  })
+})
+
 module.exports = router

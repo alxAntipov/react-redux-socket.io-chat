@@ -7,7 +7,8 @@ const { Schema } = mongoose
 const UserSchema = new Schema({
   login: String,
   hash: String,
-  salt: String
+  salt: String,
+  contacts: Array
 })
 
 UserSchema.methods.setPassword = function(password) {

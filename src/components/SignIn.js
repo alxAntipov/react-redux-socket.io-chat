@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { Link, Redirect } from "react-router-dom"
 import { connect } from "react-redux"
-import { postLogin } from "../actions/user"
+import { postLogin } from "../actions/auth"
 
 class SignIn extends Component {
   loggeedIn = e => {

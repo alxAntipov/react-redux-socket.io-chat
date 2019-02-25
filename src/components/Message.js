@@ -9,7 +9,7 @@ class Message extends Component {
           <li className="message" key={key}>
             <img
               className="message__avatar"
-              src="https://img.icons8.com/material-rounded/24/000000/user.png"
+              src="https://uinames.com/api/photos/male/9.jpg"
               alt=""
             />
             <div className="message__container">

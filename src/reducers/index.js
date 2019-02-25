@@ -1,5 +1,6 @@
 import { combineReducers } from "redux"
 import user from "./user"
+import userList from "./userList"
 import { NEW_MESSAGE } from "../constants"
 
 const messages = (state = [], action) => {
@@ -13,7 +14,8 @@ const messages = (state = [], action) => {
 
 const reducers = combineReducers({
   messages,
-  user
+  user,
+  userList
 })
 
 export default reducers

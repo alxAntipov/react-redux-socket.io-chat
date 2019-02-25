@@ -7,7 +7,7 @@ import { Provider } from "react-redux"
 import { createStore, applyMiddleware } from "redux"
 import rootReducer from "./reducers"
 
-import App from "./containers/App"
+import App from "./components/App"
 import PrivateRoute from "./components/PrivateRoute"
 import SignUp from "./components/SignUp"
 import SignIn from "./components/SignIn"
@@ -19,9 +19,9 @@ ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <Switch>
-        <PrivateRoute exact path="/" component={App} />
         <Route path="/login" component={SignIn} />
         <Route path="/register" component={SignUp} />
+        <PrivateRoute component={App} />
       </Switch>
     </BrowserRouter>
   </Provider>,
