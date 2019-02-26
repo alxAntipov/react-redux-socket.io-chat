@@ -31,6 +31,7 @@ app.use(
 require("./models/User")
 require("./config/passport")
 app.use(require("./routes/user"))
+app.use(require("./routes/contactList"))
 
 const server = app.listen(80, function(res, req) {
   console.log("listening server 80")
@@ -38,9 +39,4 @@ const server = app.listen(80, function(res, req) {
 
 const io = require("socket.io")(server)
 
-io.on("connection", function(socket) {
-  socket.on("message", function(data, callback) {
-    socket.broadcast.emit("message", data)
-    callback(data)
-  })
-})
+const socketEvents = require("./socket")(io)

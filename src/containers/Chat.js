@@ -1,20 +1,20 @@
 import React, { Component } from "react"
-import io from "socket.io-client"
 import { connect } from "react-redux"
 import moment from "moment"
+
+import Profile from "../components/Profile"
 import Message from "../components/Message"
 import { newMessage } from "../actions"
+import { getUser } from "../actions/activeChannel"
+import { XOR } from "../utils"
 
 class Chat extends Component {
-  socket = io.connect("http://localhost")
-
   componentDidMount() {
-    const { dispatch } = this.props
+    const { dispatch, match, activeChannel } = this.props
+    if (!activeChannel) {
+      dispatch(getUser({ id: match.params.id }))
+    }
     this.scrollToBottom()
-
-    this.socket.on("message", data => {
-      dispatch(newMessage(data))
-    })
   }
 
   componentDidUpdate() {
@@ -22,16 +22,18 @@ class Chat extends Component {
   }
 
   handleButton = e => {
-    console.log("hi")
-
-    const { dispatch } = this.props
+    const { dispatch, user, activeChannel, socket } = this.props
+    const channel = activeChannel ? XOR(user.id, activeChannel._id) : null
     let recieveData = {
-      user: this.props.login,
+      user: user.login,
       text: this.input.value,
+      channel: channel,
       date: moment().format("MMMM Do YYYY, h:mm:ss a")
     }
     e.preventDefault()
-    this.socket.emit("message", recieveData, data => dispatch(newMessage(data)))
+    socket.emit("new message", recieveData, data => {
+      dispatch(newMessage(data))
+    })
     this.input.value = ""
     this.scrollToBottom()
   }
@@ -43,27 +45,34 @@ class Chat extends Component {
   }
 
   render() {
+    const { activeChannel } = this.props
     return (
-      <div className="chatWrapper">
+      <div className="chat">
+        <div className="chat__header">
+          <Profile
+            modify={true}
+            login={activeChannel ? activeChannel.login : null}
+          />
+        </div>
         <div
-          className="messages"
+          className="chat__main"
           ref={el => {
             this.messageList = el
           }}
         >
           <Message messages={this.props.messages} />
         </div>
-        <div className="wrapperForm">
+        <div className="chat__footer">
           <form className="messageForm">
             <textarea
-              className="messageForm--textArea"
+              className="messageForm__textArea"
               placeholder="Write a message"
               ref={node => (this.input = node)}
               onKeyDown={e => {
                 if (e.keyCode === 13) this.handleButton(e)
               }}
             />
-            <button className="messageForm--send" onClick={this.handleButton} />
+            <button className="messageForm__btn" onClick={this.handleButton} />
           </form>
         </div>
       </div>
@@ -73,8 +82,10 @@ class Chat extends Component {
 
 const mapStateToProps = state => {
   return {
-    login: state.user.token.login,
-    messages: state.messages
+    user: state.user.token,
+    messages: state.messages,
+    activeChannel: state.activeChannel,
+    socket: state.socket
   }
 }
 

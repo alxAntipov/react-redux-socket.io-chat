@@ -2,29 +2,43 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 import { Link } from "react-router-dom"
 
-import { getUserList } from "../actions/user"
+import { setActiveChannel } from "../actions/activeChannel"
 import Profile from "../components/Profile"
 
 class ContactList extends Component {
-  componentDidMount() {
+  setChannel = user => {
     const { dispatch } = this.props
-    dispatch(getUserList())
+    dispatch(setActiveChannel(user))
   }
-
   render() {
-    const { contacts } = this.props
+    const { contacts, activeChannel } = this.props
     return (
-      <ul className="sideBar_main">
+      <ul className="contactList">
         {contacts
-          ? contacts.map(contact => (
-              <li className="contactList__item" key={contact._id}>
-                <Link to={`/chat/${contact._id}`}>
-                  <div className="sideBar__content">
-                    <Profile login={contact.login} />
-                  </div>
-                </Link>
-              </li>
-            ))
+          ? contacts.map(contact => {
+              let classnames
+              if (activeChannel) {
+                classnames =
+                  contact._id === activeChannel._id
+                    ? "contactList__item contactList__item--active"
+                    : "contactList__item"
+              } else {
+                classnames = "contactList__item"
+              }
+              return (
+                <li
+                  className={classnames}
+                  key={contact._id}
+                  onClick={() => this.setChannel(contact)}
+                >
+                  <Link to={`/chat/${contact._id}`}>
+                    <div className="sideBar__content">
+                      <Profile login={contact.login} />
+                    </div>
+                  </Link>
+                </li>
+              )
+            })
           : null}
       </ul>
     )
@@ -32,7 +46,8 @@ class ContactList extends Component {
 }
 
 const mapStateToProps = state => ({
-  contacts: state.userList
+  contacts: state.contactList,
+  activeChannel: state.activeChannel
 })
 
 export default connect(mapStateToProps)(ContactList)

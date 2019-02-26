@@ -1,0 +1,23 @@
+.welcomePage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+
+  &__img {
+    max-width: 120px;
+    border-radius: 50%;
+  }
+  &__title {
+    font-size: 56px;
+    text-align: center;
+  }
+
+  &__login {
+    font-size: inherit;
+    font-style: italic;
+    font-weight: bold;
+  }
+}

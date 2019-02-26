@@ -1,9 +1,20 @@
 .profile {
   display: flex;
+  font-size: 16px;
 
+  &__avatar {
+    height: 32px;
+    width: 32px;
+    margin-right: 20px;
+    border-radius: 50%;
+  }
+  
   &__login {
-    font-family: Catamaran;
-    color:  #ffffff;
-    font-size: 16px;
+    color:  #fff;
+    font-size: inherit;
+    &--chat {
+      font-size: inherit;
+      color:  #000;
+    }
   }
 }
