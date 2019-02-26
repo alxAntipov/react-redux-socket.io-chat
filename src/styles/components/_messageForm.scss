@@ -5,7 +5,7 @@
   height: 100%;
   padding: 0 60px;
 
-  &--send {
+  &__btn {
     width: 32px;
     height: 32px;
     border: none;
@@ -24,7 +24,7 @@
     }
   }
 
-  &--textArea {
+  &__textArea {
     padding: 5px;
     border: 1px solid #bfbfc5;
     border-radius: 5px;

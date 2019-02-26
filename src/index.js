@@ -7,7 +7,7 @@ import { Provider } from "react-redux"
 import { createStore, applyMiddleware } from "redux"
 import rootReducer from "./reducers"
 
-import App from "./components/App"
+import App from "./containers/App"
 import PrivateRoute from "./components/PrivateRoute"
 import SignUp from "./components/SignUp"
 import SignIn from "./components/SignIn"

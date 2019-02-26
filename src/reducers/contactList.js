@@ -1,10 +1,10 @@
-import { USERS_FAILURE, USERS_SUCCESS } from "../constants"
+import { CONTACTS_FAILURE, CONTACTS_SUCCESS } from "../constants"
 
 export default (state = [], action) => {
   switch (action.type) {
-    case USERS_SUCCESS:
+    case CONTACTS_SUCCESS:
       return action.userList
-    case USERS_FAILURE:
+    case CONTACTS_FAILURE:
       return []
     default:
       return state

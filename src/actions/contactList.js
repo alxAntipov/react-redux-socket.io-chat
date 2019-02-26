@@ -1,22 +1,26 @@
-import { USERS_FAILURE, USERS_REQUEST, USERS_SUCCESS } from "../constants"
+import {
+  CONTACTS_FAILURE,
+  CONTACTS_REQUEST,
+  CONTACTS_SUCCESS
+} from "../constants"
 
 // get userList action
 function requestUserList() {
   return {
-    type: USERS_REQUEST
+    type: CONTACTS_REQUEST
   }
 }
 
 function receiveUserList(userList) {
   return {
-    type: USERS_SUCCESS,
+    type: CONTACTS_SUCCESS,
     userList
   }
 }
 
 function UserListError(message) {
   return {
-    type: USERS_FAILURE,
+    type: CONTACTS_FAILURE,
     message
   }
 }
@@ -34,9 +38,9 @@ export function getUserList() {
       })
       .then(response => {
         if (!response.error) {
-          dispatch(receiveUserList(response))
+          return dispatch(receiveUserList(response))
         } else {
-          dispatch(UserListError(response.error))
+          return dispatch(UserListError(response.error))
         }
       })
   }

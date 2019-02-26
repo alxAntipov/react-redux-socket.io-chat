@@ -1,6 +1,8 @@
 import { combineReducers } from "redux"
 import user from "./user"
-import userList from "./userList"
+import contactList from "./contactList"
+import activeChannel from "./activeChannel"
+import socket from "./socket"
 import { NEW_MESSAGE } from "../constants"
 
 const messages = (state = [], action) => {
@@ -15,7 +17,9 @@ const messages = (state = [], action) => {
 const reducers = combineReducers({
   messages,
   user,
-  userList
+  contactList,
+  activeChannel,
+  socket
 })
 
 export default reducers
