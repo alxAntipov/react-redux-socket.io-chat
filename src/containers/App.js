@@ -20,8 +20,15 @@ class App extends Component {
     dispatch(getUserList()).then(contacts => {
       contacts.userList.map(contact => {
         const channel = XOR(user.id, contact._id)
-        socket.emit("join channel", channel)
+        return socket.emit("join channel", channel)
       })
+    })
+  }
+  componentWillUnmount() {
+    const { socket, contacts, user } = this.props
+    contacts.map(contact => {
+      const channel = XOR(user.id, contact._id)
+      return socket.emit("leave channel", channel)
     })
   }
 
@@ -36,7 +43,8 @@ class App extends Component {
 }
 const mapStateToProps = state => ({
   user: state.user.token,
-  contacts: state.contactList
+  contacts: state.contactList,
+  socket: state.socket
 })
 
 export default connect(mapStateToProps)(App)

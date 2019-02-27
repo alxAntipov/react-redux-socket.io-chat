@@ -15,30 +15,23 @@ class ContactList extends Component {
     return (
       <ul className="contactList">
         {contacts
-          ? contacts.map(contact => {
-              let classnames
-              if (activeChannel) {
-                classnames =
+          ? contacts.map(contact => (
+              <li
+                className={
                   contact._id === activeChannel._id
                     ? "contactList__item contactList__item--active"
                     : "contactList__item"
-              } else {
-                classnames = "contactList__item"
-              }
-              return (
-                <li
-                  className={classnames}
-                  key={contact._id}
-                  onClick={() => this.setChannel(contact)}
-                >
-                  <Link to={`/chat/${contact._id}`}>
-                    <div className="sideBar__content">
-                      <Profile login={contact.login} />
-                    </div>
-                  </Link>
-                </li>
-              )
-            })
+                }
+                key={contact._id}
+                onClick={() => this.setChannel(contact)}
+              >
+                <Link to={`/chat/${contact._id}`}>
+                  <div className="sideBar__content">
+                    <Profile login={contact.login} />
+                  </div>
+                </Link>
+              </li>
+            ))
           : null}
       </ul>
     )

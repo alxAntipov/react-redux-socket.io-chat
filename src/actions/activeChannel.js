@@ -2,8 +2,7 @@ import {
   SET_ACTIVE_CHANNEL,
   CLEAR_ACTIVE_CHANNEL,
   USER_FAILURE,
-  USER_REQUEST,
-  USER_SUCCESS
+  USER_REQUEST
 } from "../constants"
 
 export function setActiveChannel(channel) {

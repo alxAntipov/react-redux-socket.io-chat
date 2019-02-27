@@ -14,10 +14,12 @@ class Chat extends Component {
     if (!activeChannel) {
       dispatch(getUser({ id: match.params.id }))
     }
+    this.input.select()
     this.scrollToBottom()
   }
 
   componentDidUpdate() {
+    this.input.select()
     this.scrollToBottom()
   }
 
@@ -25,7 +27,8 @@ class Chat extends Component {
     const { dispatch, user, activeChannel, socket } = this.props
     const channel = activeChannel ? XOR(user.id, activeChannel._id) : null
     let recieveData = {
-      user: user.login,
+      user_from: user.login,
+      user_to: activeChannel.login,
       text: this.input.value,
       channel: channel,
       date: moment().format("MMMM Do YYYY, h:mm:ss a")
@@ -83,7 +86,6 @@ class Chat extends Component {
 const mapStateToProps = state => {
   return {
     user: state.user.token,
-    messages: state.messages,
     activeChannel: state.activeChannel,
     socket: state.socket
   }

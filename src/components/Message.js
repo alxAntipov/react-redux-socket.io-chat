@@ -7,7 +7,7 @@ class Message extends Component {
     return (
       <ul className="messageList">
         {messages.map((msg, key) => {
-          const isMyMessage = user.login === msg.user ? true : false
+          const isMyMessage = user.login === msg.user_from ? true : false
           console.log(isMyMessage)
 
           return (
@@ -23,7 +23,7 @@ class Message extends Component {
                     isMyMessage ? "message__header--my" : "message__header"
                   }
                 >
-                  <p className="message__username">{msg.user}</p>
+                  <p className="message__username">{msg.user_from}</p>
                   <p className="message__date">{msg.date}</p>
                 </div>
                 <p

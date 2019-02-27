@@ -1,0 +1,21 @@
+.settings {
+  width: 100%;
+
+  &__item {
+    display: block;
+    width: 100%;
+    background-color: inherit;
+    border: none;
+    padding: 10px 0;
+    font-size: 18px;
+    text-align: center;
+    color: #fff;
+    outline: none;
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(0,0,0, 0.1);
+    }
+  }
+}
